@@ -1,0 +1,9 @@
+# editor
+.vscode/
+
+# tests
+.coverage
+
+# virtualenv
+venv/
+env/
