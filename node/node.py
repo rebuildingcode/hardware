@@ -12,6 +12,7 @@ class Node():
 
 
     def distance_from(self, other_node):
+        """Calculates the distance from this node to other_node"""
         dist = sqrt(
             (other_node.x - self.x) ** 2 
             + (other_node.y - self.y) ** 2
