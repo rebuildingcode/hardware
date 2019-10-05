@@ -22,6 +22,7 @@ deactivate
 
 ## Namespace Packages
 
-This project is set up using namespace packages.
-See the docs [here](https://packaging.python.org/guides/packaging-namespace-packages/)
-See an example [here](https://github.com/pypa/sample-namespace-packages/tree/master/pkgutil).
+This project was set up using namespace packages.
+
+* See the docs [here](https://packaging.python.org/guides/packaging-namespace-packages/).
+* See an example [here](https://github.com/pypa/sample-namespace-packages/tree/master/pkgutil).
