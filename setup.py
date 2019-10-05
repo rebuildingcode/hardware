@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='rbc',
@@ -7,5 +7,6 @@ setup(
     author='Nguyen Ngo',
     author_email='mnguyenngo@gmail.com',
     url='https://github.com/rebuildingcode/rbc',
-    packages=['rbc'],
+    license='BSD-3',
+    packages=find_packages(),
 )

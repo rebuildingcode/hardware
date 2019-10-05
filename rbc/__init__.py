@@ -1,4 +1,1 @@
-from rbc.node.node import Node
-from rbc.area.area import Area
-
-__all__ = ['Node', 'Area']
+__path__ = __import__('pkgutil').extend_path(__path__, __name__)
