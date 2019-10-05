@@ -6,5 +6,5 @@ setup(name='rbc',
       author='Nguyen Ngo',
       author_email='mnguyenngo@gmail.com',
       url='https://github.com/rebuildingcode/rbc',
-      packages=['src'],
+      packages=['rbc'],
      )
