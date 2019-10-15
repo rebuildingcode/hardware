@@ -24,6 +24,12 @@ def point_4():
     yield Point(0, 0, 0)
 
 
+def test_repr(point_1, point_2, point_3, point_4):
+    a = Area([point_1, point_2, point_3, point_4])
+    assert a.__repr__() == ('Area([Point(0, 1, 0), Point(1, 1, 0), '
+                            'Point(1, 0, 0), Point(0, 0, 0)])')
+
+
 def test_area_from_points(point_1, point_2, point_3, point_4):
     a = Area([point_1, point_2, point_3, point_4])
 
