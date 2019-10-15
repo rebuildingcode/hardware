@@ -11,6 +11,9 @@ class Area():
             points = self.create_from_dim(dimensions)
         self.points = self.validate(points)
         
+    def __repr__(self):
+        return f"Area({[v for _, v in self.points.items()]})"
+
     def area(self):
         """Calculate and return the area"""
         len_x = self.points['2'].x - self.points['1'].x
