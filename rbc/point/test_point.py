@@ -14,6 +14,12 @@ def test_distance_from_returns_correct_value():
 
     assert p1.distance_from(p2) == 13
 
+    # test with tuple (x, y, z)
+    assert p2.distance_from((0, 0, 12)) == 5
+    
+    # test with tuple (x, y)
+    assert p2.distance_from((3, 4)) == 12
+
 
 def test_relative_to_creates_point_at_correct_location():
     p1 = Point(0, 10, 0)
