@@ -47,13 +47,13 @@ class Point():
         >>> p2 = Point(3, 4)
         >>> p2.distance_from(p1)
         5
-        
+
         """
         if not isinstance(other_point, self.__class__):
             other_point = self.temp_point(*other_point)
 
         dist = sqrt(
-            (other_point.x - self.x) ** 2 
+            (other_point.x - self.x) ** 2
             + (other_point.y - self.y) ** 2
             + (other_point.z - self.z) ** 2
         )
@@ -120,7 +120,7 @@ class Point():
     @staticmethod
     def temp_point(*args):
         """Returns a namedtuple where keys x, y, and z
-        
+
         Parameters
         ----------
         *args : iterable of floats
@@ -133,7 +133,7 @@ class Point():
         TempPoint : (x: float, y: float, z: float)
 
         """
-        
+
         if len(args) == 2:
             return TempPoint(args[0], args[1], 0)
         elif len(args) == 3:

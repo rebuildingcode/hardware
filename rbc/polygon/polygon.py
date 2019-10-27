@@ -30,7 +30,7 @@ class Polygon():
             points = self.create_from_dim(dimensions)
         self.points = self.validate(points)
         self.area = self._get_area()
-        
+
     def __repr__(self):
         return f"Polygon({[v for _, v in self.points.items()]})"
 
@@ -42,7 +42,7 @@ class Polygon():
 
     def create_from_dim(self, dimensions):
         """Generate points from (x, y) tuple
-        
+
         Parameters
         ----------
         dimensions : tuple of floats
@@ -67,12 +67,12 @@ class Polygon():
         Parameters
         ----------
         points : iterable of Points
-        
+
         Returns
-        ------- 
+        -------
         dict of Points in order starting from top left ``Point``, going
         clockwise
-        
+
         """
         assert len(points) == 4
         x_set = set([point.x for point in points])
@@ -82,13 +82,13 @@ class Polygon():
         assert len(x_set) == len(y_set) == 2
         assert len(z_set) == 1  # only support polygons in one z-plane
 
-        top_left = [point for point in points 
+        top_left = [point for point in points
                     if point.x == min(x_set) and point.y == max(y_set)][0]
-        top_right = [point for point in points 
+        top_right = [point for point in points
                      if point.x == max(x_set) and point.y == max(y_set)][0]
-        bottom_right = [point for point in points 
+        bottom_right = [point for point in points
                         if point.x == max(x_set) and point.y == min(y_set)][0]
-        bottom_left = [point for point in points 
+        bottom_left = [point for point in points
                         if point.x == min(x_set) and point.y == min(y_set)][0]
 
         return {
