@@ -3,5 +3,5 @@
 From `rbc/`, run
 
 ``` bash
-pytest --cov
+pytest --cov --cov-report term-missing
 ```

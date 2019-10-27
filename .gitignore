@@ -10,3 +10,6 @@
 # virtualenv
 venv/
 env/
+
+# Jupyter notebooks
+notebooks/private
