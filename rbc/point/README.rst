@@ -1,9 +1,10 @@
 Point
 =====
 
-``Point`` s are coordinates in 3-dimensional space. They can be moved in 3D space 
-and distances can be measured between different ``Point`` s. They are used to 
-define ``Polygon`` s and other objects.
+Point objects are coordinates in 3-dimensional space. They can be moved in 3D
+space and distances can be measured between different points. They are used
+to define ``Polygon`` objects, and soon will support other types of objects as
+well.
 
 
 Parameters/Attributes
@@ -12,7 +13,7 @@ Parameters/Attributes
 x
   Coordinate associated with east/west direction
 
-y 
+y
   Coordinate associated with north/south direction
 
 z
@@ -22,8 +23,8 @@ z
 Examples
 --------
 
-Moving ``Point`` s
-~~~~~~~~~~~~~~~~~~
+Moving ``Point`` objects
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 

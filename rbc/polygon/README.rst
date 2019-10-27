@@ -1,17 +1,17 @@
 Polygon
 =======
 
-``Polygon`` s are shapes defined by a list of ``Point`` s. Edges of polygons
-are all straight lines.
+``Polygon`` objects are shapes defined by a list of ``Point`` objects. Edges
+of polygons are all straight lines.
 
 
 Parameters
 ----------
 
 points
-  list of ``Point`` s used to define the ``Polygon``
+  list of ``Point`` objects used to define the ``Polygon``
 
-dimensions 
+dimensions
   tuple of dimensions (x, y) used to define the ``Polygon``
 
 
