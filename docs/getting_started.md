@@ -1,5 +1,11 @@
 # Getting Started
 
+## Clone the repo
+
+```bash
+git clone git@github.com:rebuildingcode/rbc.git
+```
+
 ## Virtual Environments
 
 To create the virtual environment:
@@ -14,7 +20,19 @@ To activate the virtual environment:
 source venv/bin/activate
 ```
 
-To deavtivate the virtual environment:
+## Installing required packages
+
+```bash
+pip install -r requirements.txt
+```
+
+## Create a kernel to use Jupyter notebooks in your virtual environment
+
+```bash
+ipython kernel install --user --name=rbc
+```
+
+## Deactivate the virtual environment
 
 ```bash
 deactivate
