@@ -13,12 +13,6 @@ def one_by_one():
     yield [p1, p2, p3, p4]
 
 
-def test_repr(one_by_one):
-    a = Polygon(one_by_one)
-    assert a.__repr__() == ('Polygon([Point(0, 1, 0), Point(1, 1, 0), '
-                            'Point(1, 0, 0), Point(0, 0, 0)])')
-
-
 def test_area_from_points(one_by_one):
     a = Polygon(one_by_one)
 

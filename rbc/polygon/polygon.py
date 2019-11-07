@@ -31,9 +31,6 @@ class Polygon():
         self.points = self.validate(points)
         self.area = self._get_area()
 
-    def __repr__(self):
-        return f"Polygon({[v for _, v in self.points.items()]})"
-
     def _get_area(self):
         """Calculate and return the area"""
         len_x = self.points['2'].x - self.points['1'].x
