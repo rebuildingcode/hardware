@@ -38,7 +38,7 @@ class Point(sp):
         --------
         >>> p1 = Point(0, 0)
         >>> p2 = Point(3, 4)
-        >>> p2.distance_from(p1)
+        >>> p2.distance(p1)
         5
 
         """

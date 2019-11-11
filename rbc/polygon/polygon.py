@@ -1,4 +1,8 @@
-from ..point.point import Point
+from ..point import Point
+
+""" This class may be deleted depending on if a subclass of shapely's Polygon
+would still be needed.
+"""
 
 class Polygon():
     """Four points required to create an Polygon
