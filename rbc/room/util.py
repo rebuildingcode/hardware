@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from ..point import Point
 
 
-def plot_rooms(rooms, figsize=(12, 12), labels=True):  # pragma: no cover
+def plot_rooms(rooms, figsize=(12, 12), labels=True):
     """Plots a list of rooms"""
     fig, ax = plt.subplots(figsize=figsize)
     for room in rooms:
