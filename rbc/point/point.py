@@ -2,12 +2,14 @@ import logging
 from math import sqrt
 from collections import namedtuple
 
+from shapely.geometry import Point as sp
+
 log = logging.getLogger()
 
 TempPoint = namedtuple('TempPoint', ['x', 'y', 'z'])
 
 
-class Point():
+class Point(sp):
     """Points are coordinates in 3-dimensional space.
 
     Parameters
@@ -18,18 +20,9 @@ class Point():
         Coordinate associated with north/south direction
     z : float
         Coordinate associated with elevation
-
     """
-    def __init__(self, x, y, z=0):
-        self.x = x
-        self.y = y
-        self.z = z
 
-    def __repr__(self):
-        """Outputs ``Point(x, y, z)`` when inspecting the object"""
-        return f"Point({self.x}, {self.y}, {self.z})"
-
-    def distance_from(self, other_point):
+    def distance(self, other_point):
         """Calculates the distance from this point to ``other_point``.
 
         Parameters
@@ -45,47 +38,32 @@ class Point():
         --------
         >>> p1 = Point(0, 0)
         >>> p2 = Point(3, 4)
-        >>> p2.distance_from(p1)
+        >>> p2.distance(p1)
         5
 
         """
         if not isinstance(other_point, self.__class__):
-            other_point = self.temp_point(*other_point)
+            other_point = sp(*other_point)
 
-        dist = sqrt(
-            (other_point.x - self.x) ** 2
-            + (other_point.y - self.y) ** 2
-            + (other_point.z - self.z) ** 2
-        )
+        dist = super().distance(other_point)
+
+        if self.has_z or other_point.has_z:
+            if not self.has_z:
+                z1 = 0
+            else:
+                z1 = self.z
+
+            if not other_point.has_z:
+                z2 = 0
+            else:
+                z2 = other_point.z
+
+            dist = sqrt(
+                dist ** 2 +
+                (z2 - z1) ** 2
+            )
 
         return dist
-
-    def move(self, *distance):
-        """Move a point by ``distance``.
-
-        Parameters
-        ----------
-        *distance : iterable of floats
-            Two or three arguments are acceptable.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        >>> p1 = Point(0, 0)
-        >>> p1.move(2, 4)
-        >>> p1
-        Point(2, 4, 0)
-
-        """
-        distance = self.temp_point(*distance)
-        if distance:
-            self.x += distance[0]
-            self.y += distance[1]
-            self.z += distance[2]
-            log.info(self.__repr__())
 
     @classmethod
     def relative_to(cls, origin_point, offset):

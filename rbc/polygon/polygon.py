@@ -1,4 +1,8 @@
-from ..point.point import Point
+from ..point import Point
+
+""" This class may be deleted depending on if a subclass of shapely's Polygon
+would still be needed.
+"""
 
 class Polygon():
     """Four points required to create an Polygon
@@ -30,9 +34,6 @@ class Polygon():
             points = self.create_from_dim(dimensions)
         self.points = self.validate(points)
         self.area = self._get_area()
-
-    def __repr__(self):
-        return f"Polygon({[v for _, v in self.points.items()]})"
 
     def _get_area(self):
         """Calculate and return the area"""
