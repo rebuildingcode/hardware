@@ -1,6 +1,10 @@
 Polygon
 =======
 
+> NOTE: This class object may be suspended since many of the functionalities
+desired are provided by Shapely's `Polygon` object. This object may be deleted
+in the near future.
+
 ``Polygon`` objects are shapes defined by a list of ``Point`` objects. Edges
 of polygons are all straight lines.
 
