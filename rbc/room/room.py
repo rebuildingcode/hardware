@@ -2,7 +2,7 @@ import random
 from shapely.geometry import Polygon
 
 from ..point import Point
-from .util import plot_rooms, random_rectangle
+from .utils import plot_rooms, random_rectangle
 
 MIN_AREA = 70
 
@@ -10,7 +10,19 @@ MIN_WIDTH = 7
 MAX_WIDTH = 15
 
 class Room(Polygon):
-    """
+    """Rooms are 2-dimensional polygons.
+
+    Parameters
+    ----------
+    points: Point
+        List of ``Point`` objects
+
+    room_type: string
+        Type of room (e.g. bedroom, bathroom, kitchen, living room, etc.)
+
+    min_area : float
+        This value will be used to determine the minimum random value when
+        generating rooms
     """
     def __init__(self, points=None, room_type=None, min_area=MIN_AREA):
         self.room_type = room_type

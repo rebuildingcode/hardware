@@ -1,6 +1,7 @@
 from ..point import Point
 
-""" This class may be deleted depending on if a subclass of shapely's Polygon
+""" NOTE
+This class may be deleted depending on if a subclass of shapely's Polygon
 would still be needed.
 """
 

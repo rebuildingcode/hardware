@@ -1,8 +1,9 @@
 import pytest
 from unittest import mock
 
-from .room import Room
-from .util import random_rectangle, plot_rooms
+from ..room import Room
+from .constructors import random_rectangle
+from .plot import plot_rooms
 
 
 def test_random_rectangle():
