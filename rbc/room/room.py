@@ -24,9 +24,11 @@ class Room(Polygon):
         This value will be used to determine the minimum random value when
         generating rooms
     """
-    def __init__(self, points=None, room_type=None, min_area=MIN_AREA):
+    def __init__(self, points=None, room_type=None, name=None, min_area=MIN_AREA):
         self.room_type = room_type
         self.min_area = min_area
+        self.points = points
+        self.name = name
 
         Polygon.__init__(self, shell=[(pt.x, pt.y) for pt in points])
 
