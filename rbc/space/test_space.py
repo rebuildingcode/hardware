@@ -75,14 +75,14 @@ def test_place_contents_polygon(ten_by_ten_points, five_by_four_poly):
     """Space object should be able to contain shapely Polygon objects"""
     s = Space(points=ten_by_ten_points, contents=[five_by_four_poly])
 
-    assert s.plan['AREA: 20.0'].within(s.polygon)
+    assert s.plan['AREA: 20.0'].within(s)
 
 
 def test_place_contents_space(ten_by_ten_points, five_by_four_space):
     """Space object should be able to contain shapely Polygon objects"""
     s = Space(points=ten_by_ten_points, contents=[five_by_four_space])
 
-    assert s.plan['5x4 Space'].within(s.polygon)
+    assert s.plan['5x4 Space'].within(s)
 
 
 def test_place_contents_will_not_fit_second_content(ten_by_ten_points):
