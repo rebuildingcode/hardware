@@ -1,15 +1,17 @@
 import random
-from shapely.geometry import Polygon
+# from shapely.geometry import Polygon
 
 from ..point import Point
+from ..space import Space
 from .utils import plot_rooms, random_rectangle
+
 
 MIN_AREA = 70
 
 MIN_WIDTH = 7
 MAX_WIDTH = 15
 
-class Room(Polygon):
+class Room(Space):
     """Rooms are 2-dimensional polygons.
 
     Parameters
@@ -24,13 +26,12 @@ class Room(Polygon):
         This value will be used to determine the minimum random value when
         generating rooms
     """
-    def __init__(self, points=None, room_type=None, name=None, min_area=MIN_AREA):
+    def __init__(self, points=None, name=None, contents=None, room_type=None):
         self.room_type = room_type
-        self.min_area = min_area
         self.points = points
-        self.name = name
+        # self.min_area = min_area
 
-        Polygon.__init__(self, shell=[(pt.x, pt.y) for pt in points])
+        super().__init__(points=points, name=name, contents=contents)
 
     # TODO: Add a method to create doors
     # def create_door(self, corner, offset=1):
