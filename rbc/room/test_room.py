@@ -17,6 +17,11 @@ def test_10_by_10_room():
     assert square_room.room_type == "shed"
 
 
+def test_random_room_without_bounds():
+    random_room = Room.random()
+    assert random_room.area > 0
+
+
 def test_random_room_with_bounds():
     bounds = (2, 2, 10, 10)
     random_room = Room.random(bounds=bounds)
@@ -26,10 +31,3 @@ def test_random_room_with_bounds():
     assert rr_bounds[2] <= bounds[2]
     assert rr_bounds[3] <= bounds[3]
     assert random_room.area <= 64
-
-
-def test_plot_room():
-    random_room = Room.random()
-    with mock.patch('rbc.room.room.plot_rooms') as mock_plot:
-        random_room.plot()
-        mock_plot.assert_called()

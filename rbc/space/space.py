@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from shapely.geometry import Polygon
 
 from ..point import Point
+from .utils import get_polygon_label, plot_space
 
 
 class Space(Polygon):
@@ -32,6 +33,9 @@ class Space(Polygon):
         if self.contents:
             self.place_contents(self.contents)
 
+    # TODO Human readable name for Spaces. Current output is:
+    # <rbc.space.space.Space at 0x11479c710>
+
     def place_contents(self, contents):
         """Iterate through each content to place_content()"""
         for content in contents:
@@ -39,13 +43,7 @@ class Space(Polygon):
 
     def place_content(self, content, retries=0):
         """Places content in a valid location"""
-        if hasattr(content, 'name'):
-            # get label for polygon-type objects with name attribute
-            plan_label = content.name
-        else:
-            # otherwise default to using the area value as the label
-            # this supports shapely's Polygon object
-            plan_label = f"AREA: {content.area}"
+        plan_label = get_polygon_label(content)
 
         # TODO: add capability for Space to remember failed attempts to reduce
         # amount of tries needed; possibly keep a list of failed locations
@@ -68,7 +66,9 @@ class Space(Polygon):
             else:  # handle input for RBC Polygon subclass objects
                 respective_points = [Point(x, y)
                                      for (x, y) in potential_location]
-                place = content.__class__(points=respective_points)
+                place = content.__class__(points=respective_points,
+                                          name=content.name,
+                                          contents=content.contents)
 
             if self.validate_place(place):
                 # object's location is valid; add object to self.plan dict
@@ -86,9 +86,8 @@ class Space(Polygon):
     def validate_place(self, place):
         """A place is valid if it is not in conflict with any other object in
         self.plan
-
-        # TODO This method could use a better name
         """
+        # TODO This method could use a better name
         if len(self.plan) > 0:
             checks = []
             for thing in self.plan.values():
@@ -145,22 +144,4 @@ class Space(Polygon):
         return loc_points
 
     def plot(self, figsize=(12, 12)):
-        """Plots a list of rooms
-
-        TODO: This method should probably make use of a more general function
-        plot any type of Polygon class object.
-        """
-        fig, ax = plt.subplots(figsize=figsize)
-
-        # plot boundary
-        x, y = self.exterior.xy
-        ax.plot(x, y)
-
-        # plot contents
-        for label, poly in self.plan.items():
-            x, y = poly.exterior.xy
-            ax.plot(x, y)
-            ax.text(poly.centroid.x, poly.centroid.y, s=label,
-                    horizontalalignment='center', verticalalignment='center')
-        plt.axis('scaled')
-        plt.show()
+        plot_space(self)

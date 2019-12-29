@@ -3,7 +3,7 @@ import random
 
 from ..point import Point
 from ..space import Space
-from .utils import plot_rooms, random_rectangle
+from .utils import random_rectangle
 
 
 MIN_AREA = 70
@@ -69,7 +69,3 @@ class Room(Space):
             pts = pts_in_bounds
 
         return cls(points=pts, room_type=room_type)
-
-    def plot(self):
-        """Plot the room"""
-        plot_rooms([self])
