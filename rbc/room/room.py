@@ -30,6 +30,7 @@ class Room(Space):
         super().__init__(**kwargs)
 
     # TODO: Add a method to create doors
+    # prerequisite: Door class object
     # def create_door(self, corner, offset=1):
     #     """
     #     """

@@ -2,7 +2,7 @@ import pytest
 from unittest import mock
 
 from .space import Space
-from ..point.point import Point
+from ..point import Point
 from shapely.geometry import Polygon
 
 
