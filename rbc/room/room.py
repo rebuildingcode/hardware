@@ -1,11 +1,11 @@
 import random
-# from shapely.geometry import Polygon
 
 from ..point import Point
 from ..space import Space
 from .utils import random_rectangle
 
 
+# TODO Add rules for minimum area
 MIN_AREA = 70
 
 MIN_WIDTH = 7
@@ -16,22 +16,18 @@ class Room(Space):
 
     Parameters
     ----------
-    points: Point
-        List of ``Point`` objects
-
     room_type: string
         Type of room (e.g. bedroom, bathroom, kitchen, living room, etc.)
 
+    TODO Add rules to Room class for minimum area
     min_area : float
         This value will be used to determine the minimum random value when
         generating rooms
     """
-    def __init__(self, points=None, name=None, contents=None, room_type=None):
+    def __init__(self, room_type=None, **kwargs):
         self.room_type = room_type
-        self.points = points
-        # self.min_area = min_area
 
-        super().__init__(points=points, name=name, contents=contents)
+        super().__init__(**kwargs)
 
     # TODO: Add a method to create doors
     # def create_door(self, corner, offset=1):
