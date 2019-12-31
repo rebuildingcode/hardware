@@ -21,6 +21,14 @@ class Point(sp):
     z : float
         Coordinate associated with elevation
     """
+    def __repr__(self):
+        if self._ndim == 3:
+            return f'Point({self.x}, {self.y}, {self.z})'
+        else:
+            return f'Point({self.x}, {self.y})'
+
+    def __str__(self):
+        return self.__repr__()
 
     def distance(self, other_point):
         """Calculates the distance from this point to ``other_point``.
