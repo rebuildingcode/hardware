@@ -2,6 +2,10 @@ import matplotlib.pyplot as plt
 
 from .base import get_polygon_label
 
+# NOTE The functions below try to be general enough to work for most cases of
+# plotting Spaces and Rooms. Going forward, specialized plotting functions
+# should be added to handle other Space-like objects, furniture in rooms, etc.
+
 
 def plot_space(sp, figsize=(12, 12)):
     """Plots a list of spaces"""
@@ -21,7 +25,6 @@ def handle_parent_polygons(sp, ax):
             subspace_classes = set()
             for label, subspace in sp.plan.items():
                 handle_parent_polygons(subspace, ax)
-                # subspace_classes.add(subspace.__class__)
             # Do not show labels for parent polygons
             add_space_to_plot(sp, ax, show_labels=False)
         else:

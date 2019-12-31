@@ -104,13 +104,28 @@ def test_place_contents_will_fit_second_content(ten_by_ten_points):
     three_square = nameable_space('three square', 3, 3)
     five_square = nameable_space('five square', 5, 5)
 
-    # eight_square is not expected to fit after three_square is placed
+    # a 10x10 square is expected to fit a three_square and five_square
     s = Space(points=ten_by_ten_points, contents=[
         three_square, five_square
     ])
 
     assert len(s.plan) == 2
     assert list(s.plan.keys()) == ['three square', 'five square']
+
+
+def test_nested_content(five_by_four_points, ten_by_ten_points):
+    """Space object should be able to contain shapely Polygon objects"""
+    three_square = nameable_space('3x3', 3, 3)
+
+    five_square = Space(points=five_by_four_points, name='5x5',
+                        contents=[three_square])
+    ten_square = Space(points=ten_by_ten_points, name='10x10',
+                       contents=[five_square])
+
+    assert len(ten_square.plan) == 1
+    assert list(ten_square.plan.keys()) == ['5x5']
+    assert len(ten_square.plan['5x5'].plan) == 1
+    assert list(ten_square.plan['5x5'].plan.keys()) == ['3x3']
 
 
 def test_plot_space(ten_by_ten_points, five_by_four_space):

@@ -1,3 +1,4 @@
+import logging
 import random
 import matplotlib.pyplot as plt
 
@@ -5,6 +6,8 @@ from shapely.geometry import Polygon
 
 from ..point import Point
 from .utils import get_polygon_label, plot_space
+
+log = logging.getLogger()
 
 
 class Space(Polygon):
@@ -20,8 +23,11 @@ class Space(Polygon):
 
     contents: Polygons or subclasses of Polygons
         List of objects that should be located within the Space
+
+    exist_sp: Space object
+        For recreating a new space with new points
     """
-    def __init__(self, points=None, name=None, contents=None):
+    def __init__(self, points=None, name=None, contents=None, exist_sp=None):
         self.max_retries = 15
         self.name = name
         self.contents = contents
@@ -29,21 +35,34 @@ class Space(Polygon):
         super().__init__(shell=[(pt.x, pt.y) for pt in points])
 
         # plan iscludes contents but with location modified to fit in Space
-        self.plan = {}
-        if self.contents:
-            self.place_contents(self.contents)
+        if not exist_sp:
+            self.plan = {}
+            if self.contents:
+                log.info(f'Contents found: {self.contents}')
+                self.place_contents(self.contents)
+        else:  # copy existing plan and translate to Space's new location
+            self.contents = list(exist_sp.plan.keys())
+            self.plan = self.recreate_plan(exist_sp, points)
 
     # TODO Human readable name for Spaces. Current output is:
     # <rbc.space.space.Space at 0x11479c710>
+    def __str__(self):
+        return f'Space: {self.name}, AREA: {self.area}'
+
+    def __repr__(self):
+        return self.__str__()
 
     def place_contents(self, contents):
         """Iterate through each content to place_content()"""
+
         for content in contents:
             self.place_content(content)
 
     def place_content(self, content, retries=0):
         """Places content in a valid location"""
         plan_label = get_polygon_label(content)
+
+        log.debug(f"Placing {plan_label}...")
 
         # TODO: add capability for Space to remember failed attempts to reduce
         # amount of tries needed; possibly keep a list of failed locations
@@ -66,19 +85,24 @@ class Space(Polygon):
             else:  # handle input for RBC Polygon subclass objects
                 respective_points = [Point(x, y)
                                      for (x, y) in potential_location]
+
+                # TODO Creating a new object shuffles the contents. This
+                # behavior should be prevented so that child polygons are not
+                # shuffled by default.
                 place = content.__class__(points=respective_points,
                                           name=content.name,
-                                          contents=content.contents)
+                                          contents=content.contents,
+                                          exist_sp=content)
 
             if self.validate_place(place):
                 # object's location is valid; add object to self.plan dict
                 self.plan[plan_label] = place
                 return
             else:  # location is not valid; retry
-                print(f"Failed to place {plan_label}. Retrying...")
+                log.info(f"Failed to place {plan_label}. Retrying...")
                 retries += 1
 
-        print(f"Reached max retries for {plan_label}. Skipping...")
+        log.info(f"Reached max retries for {plan_label}. Skipping...")
         # max retries reached; continue finishing up Space construction
         # without content
         return
@@ -101,13 +125,44 @@ class Space(Polygon):
         else:
             return True
 
+    def recreate_plan(self, sp, points):
+        old_origin_x, old_origin_y = sp.bounds[:2]
+        new_origin_x, new_origin_y = self.bounds[:2]
+
+        log.debug(f'old coords: ({old_origin_x}, {old_origin_y})')
+        log.debug(f'new coords: ({new_origin_x}, {new_origin_y})')
+
+        translate_x = new_origin_x - old_origin_x
+        translate_y = new_origin_y - old_origin_y
+
+        log.debug(f'translate: ({translate_x}, {translate_y})')
+
+        # store relative location from relative origin
+        relative_loc = {}
+        new_plan = {}
+
+        for name, poly in sp.plan.items():
+            # lower left coordinates
+            poly_x, poly_y = poly.bounds[:2]
+            relative_loc[name] = (poly_x - old_origin_x,
+                                  poly_y - old_origin_y)
+
+            old_coords = poly.exterior.coords[:4]
+            new_points = [Point(old_x + translate_x, old_y + translate_y)
+                          for (old_x, old_y) in old_coords]
+
+            new_poly = poly.__class__(points=new_points, name=name)
+            new_plan[name] = new_poly
+
+        return new_plan
+
     def corner_locate(self, content):
         """Return a set of points for a random corner"""
         b_x_min, b_y_min, b_x_max, b_y_max = self.bounds
         c_x_min, c_y_min, c_x_max, c_y_max = content.bounds
-        x_min = b_x_min + c_x_min
+        x_min = min(b_x_min, c_x_min)
         x_max = b_x_max - c_x_max
-        y_min = b_y_min + c_y_min
+        y_min = min(b_y_min, c_y_min)
         y_max = b_y_max - c_y_max
 
         rand_x = random.choice([x_min, x_max])
