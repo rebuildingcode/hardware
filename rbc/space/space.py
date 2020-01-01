@@ -30,27 +30,28 @@ class Space(Polygon):
     def __init__(self, points=None, name=None, contents=None, exist_sp=None):
         self.max_retries = 15
         self.name = name
-        self.contents = contents
 
         super().__init__(shell=[(pt.x, pt.y) for pt in points])
 
-        # plan iscludes contents but with location modified to fit in Space
+        # plan includes contents but with location modified to fit in Space
         if not exist_sp:
             self.plan = {}
-            if self.contents:
-                log.info(f'Contents found: {self.contents}')
-                self.place_contents(self.contents)
+            if contents:
+                log.info(f'Contents found: {contents}')
+                self.place_contents(contents)
         else:  # copy existing plan and translate to Space's new location
-            self.contents = list(exist_sp.plan.keys())
             self.plan = self.recreate_plan(exist_sp, points)
 
-    # TODO Human readable name for Spaces. Current output is:
-    # <rbc.space.space.Space at 0x11479c710>
     def __str__(self):
         return f'Space: {self.name}, AREA: {self.area}'
 
     def __repr__(self):
         return self.__str__()
+
+    @property
+    def contents(self):
+        """Return objects in self.plan as a list"""
+        return list(self.plan.keys())
 
     def place_contents(self, contents):
         """Iterate through each content to place_content()"""

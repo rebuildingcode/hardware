@@ -53,14 +53,14 @@ def five_by_five_space():
 def test_generic_floorplan(ten_by_ten_fp):
     """ten_by_ten_space should have an area value of 100"""
     assert ten_by_ten_fp.area == 100
-    assert str(ten_by_ten_fp) == 'FloorPlan: 10x10 Floor Plan, Rooms: None'
-    assert ten_by_ten_fp.__repr__() == 'FloorPlan: 10x10 Floor Plan, Rooms: None'
+    assert str(ten_by_ten_fp) == 'FloorPlan: 10x10 Floor Plan, Rooms: []'
+    assert ten_by_ten_fp.__repr__() == 'FloorPlan: 10x10 Floor Plan, Rooms: []'
 
 
 def test_floorplan_with_room(ten_by_ten_points, eight_by_five_room):
     fp = FloorPlan(points=ten_by_ten_points, rooms=[eight_by_five_room])
 
-    assert '8x5 room' in fp.plan.keys()
+    assert '8x5 room' in fp.rooms
 
 
 # =================
