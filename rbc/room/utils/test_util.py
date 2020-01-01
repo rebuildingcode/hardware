@@ -3,7 +3,6 @@ from unittest import mock
 
 from ..room import Room
 from .constructors import random_rectangle
-from .plot import plot_rooms
 
 
 def test_random_rectangle():
@@ -13,10 +12,3 @@ def test_random_rectangle():
     for point in rect_points:
         assert point.x <= max_x
         assert point.y <= max_y
-
-
-def test_plot_rooms():
-    random_room = Room.random()
-    with mock.patch('matplotlib.pyplot.show') as mock_show:
-        plot_rooms([random_room])
-        mock_show.assert_called()

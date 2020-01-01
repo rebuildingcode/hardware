@@ -3,6 +3,13 @@ import pytest
 from .point import Point
 
 
+def test_repr_and_str():
+    p1 = Point(0, 0)
+    p2 = Point(3, 4, 5)
+
+    assert p1.__repr__() == 'Point(0.0, 0.0)'
+    assert p2.__str__() == 'Point(3.0, 4.0, 5.0)'
+
 def test_distance_for_2d_space():
     p1 = Point(0, 0)
     p2 = Point(3, 4)
