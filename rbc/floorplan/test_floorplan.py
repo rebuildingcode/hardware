@@ -63,12 +63,22 @@ def test_floorplan_with_room(ten_by_ten_points, eight_by_five_room):
     assert '8x5 room' in fp.rooms
 
 
+def test_fp_with_space_raises_exc(ten_by_ten_points, five_by_five_space):
+    with pytest.raises(Exception):
+        FloorPlan(points=ten_by_ten_points, rooms=[five_by_five_space])
+
+
 # =================
 # TESTCASES
 # =================
 
-@pytest.mark.usefixtures('ten_by_ten_points', 'five_by_five_space')
-class TestFloorPlan(TestCase):
-    def test_floorplan_with_space(self):
-        self.assertRaises(Exception, FloorPlan, points=ten_by_ten_points,
-                          rooms=[five_by_five_space])
+# NOTE: pytest.raises() used above follows the same pattern as previous tests
+# and does not require the use of TestCases. TestCase was originally used in
+# order to assert that an Exception was raised with assertRaises. Will opt for
+# the pytest implementation until TestCase becomes necessary.
+
+# @pytest.mark.usefixtures('ten_by_ten_points', 'five_by_five_space')
+# class TestFloorPlan(TestCase):
+#     def test_floorplan_with_space(self):
+#         self.assertRaises(Exception, FloorPlan, points=ten_by_ten_points,
+#                           rooms=[five_by_five_space])

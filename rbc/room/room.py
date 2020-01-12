@@ -12,7 +12,7 @@ MIN_WIDTH = 7
 MAX_WIDTH = 15
 
 class Room(Space):
-    """Rooms are 2-dimensional polygons.
+    """Rooms are Spaces with walls and at least one door.
 
     Parameters
     ----------

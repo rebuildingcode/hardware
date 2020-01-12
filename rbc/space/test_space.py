@@ -134,5 +134,4 @@ def test_plot_space(ten_by_ten_points, five_by_four_space):
 
     with mock.patch('matplotlib.pyplot.show') as mock_show:
         s.plot()
-        # plot_rooms([random_room])
         mock_show.assert_called()
