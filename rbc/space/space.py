@@ -11,7 +11,8 @@ log = logging.getLogger()
 
 
 class Space(Polygon):
-    """Space are 2-dimensional polygons.
+    """Space are 2-dimensional polygons that are containers for polygons or
+    other Space-type objects (e.g. Rooms).
 
     Parameters
     ----------
