@@ -20,6 +20,7 @@ class Point(sp):
         Coordinate associated with north/south direction
     z : float
         Coordinate associated with elevation
+
     """
     def __repr__(self):
         if self._ndim == 3:
@@ -119,7 +120,6 @@ class Point(sp):
         TempPoint : (x: float, y: float, z: float)
 
         """
-
         if len(args) == 2:
             return TempPoint(args[0], args[1], 0)
         elif len(args) == 3:
@@ -129,3 +129,26 @@ class Point(sp):
                 f"Attempted to create temporary point with {len(args)} arguments. "
                 "Temporary points require 2 or 3 arguments."
             )
+
+    def nearest(self, points):
+        """Returns the nearest point to self from a list of points
+
+        Parameters
+        ----------
+        points : list of Points
+
+        Returns
+        -------
+        nearest_pt : Point
+
+        """
+        # initialize the values for comparison
+        thresh = self.distance(points[0])
+        nearest_pt = points.pop(0)
+
+        for pt in points:
+            d = self.distance(pt)
+            if d < thresh:
+                nearest_pt = pt
+
+        return nearest_pt
