@@ -1,6 +1,7 @@
 import logging
 from math import sqrt
 from collections import namedtuple
+import matplotlib.pyplot as plt
 
 from shapely.geometry import Point as sp
 
@@ -152,3 +153,11 @@ class Point(sp):
                 nearest_pt = pt
 
         return nearest_pt
+
+    def plot(self, figsize=(12, 12)):
+        """Plots the Point"""
+        fig, ax = plt.subplots(figsize=figsize)
+        coords = (self.x, self.y)
+        ax.plot(self.x, self.y, 'ro')
+        ax.annotate(coords, coords)
+        plt.show()

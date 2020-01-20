@@ -1,4 +1,5 @@
 import pytest
+from unittest import mock
 
 from .point import Point
 
@@ -67,3 +68,12 @@ def test_nearest_3d():
 
     assert p1.nearest([p2, p3, p4, p5]) == p2
     assert p2.nearest([p1, p3, p4, p5]) == p5
+
+
+def test_plot():
+    """plt.show() should be called"""
+    pt = Point(3, 4, 0)
+
+    with mock.patch('matplotlib.pyplot.show') as mock_show:
+        pt.plot()
+        mock_show.assert_called()
