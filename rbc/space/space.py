@@ -1,6 +1,8 @@
 import logging
 import random
 import matplotlib.pyplot as plt
+from math import floor, ceil
+
 
 from shapely.geometry import Polygon
 
@@ -26,7 +28,7 @@ class Space(Polygon):
         List of objects that should be located within the Space
 
     exist_sp: Space object
-        For recreating a new space with new points
+        For recreating a space with new points
     """
     def __init__(self, points=None, name=None, contents=None, exist_sp=None):
         self.max_retries = 15
@@ -40,8 +42,8 @@ class Space(Polygon):
             if contents:
                 log.info(f'Contents found: {contents}')
                 self.place_contents(contents)
-        else:  # copy existing plan and translate to Space's new location
-            self.plan = self.recreate_plan(exist_sp, points)
+        else:  # copy existing plan's contents over to newly created Space
+            self.plan = self.recreate_plan(exist_sp)
 
     def __str__(self):
         return f'Space: {self.name}, AREA: {self.area}'
@@ -82,7 +84,8 @@ class Space(Polygon):
             # create a new Polygon-class object at the potential_location
             # this new object will be used to represent the original content
             if content.__class__ == Polygon:
-                # handle input for shapely Polygon class
+                # handle input for shapely Polygon class because parameters
+                # are expected to be different
                 place = Polygon(shell=potential_location)
             else:  # handle input for RBC Polygon subclass objects
                 respective_points = [Point(x, y)
@@ -95,6 +98,10 @@ class Space(Polygon):
                                           name=content.name,
                                           contents=content.contents,
                                           exist_sp=content)
+
+                # Make sure room_type is preserved if it exists
+                if hasattr(content, 'room_type'):
+                    place.room_type = content.room_type
 
             if self.validate_place(place):
                 # object's location is valid; add object to self.plan dict
@@ -109,11 +116,42 @@ class Space(Polygon):
         # without content
         return
 
+    def place_content_at(self, content, x_offset=0, y_offset=0):
+        """Determine points from given offsets and place content in space"""
+        loc_points = [
+            (x+x_offset, y+y_offset) for x, y in content.exterior.coords[:-1]
+        ]
+
+        respective_points = [Point(x, y)
+                             for (x, y) in loc_points]
+
+        place = content.__class__(points=respective_points,
+                                  name=content.name,
+                                  contents=content.contents,
+                                  exist_sp=content)
+
+        # Make sure room_type is preserved if it exists
+        if hasattr(content, 'room_type'):
+            place.room_type = content.room_type
+
+        if self.validate_place(place):
+            # object's location is valid; add object to self.plan dict
+            log.info(f"Successfully placed {content.name}.")
+            self.plan[content.name] = place
+        else:  # location is not valid
+            log.info(f"Failed to place {content.name}.")
+            raise Exception
+        return
+
+
     def validate_place(self, place):
         """A place is valid if it is not in conflict with any other object in
-        self.plan
+        self.plan and if the place is within the Space.
         """
         # TODO This method could use a better name
+        if not place.within(self):
+            return False
+
         if len(self.plan) > 0:
             checks = []
             for thing in self.plan.values():
@@ -127,7 +165,10 @@ class Space(Polygon):
         else:
             return True
 
-    def recreate_plan(self, sp, points):
+    def recreate_plan(self, sp):
+        """Creates new Space with same contents as an existing Space at a new
+        location defined by the points parameter.
+        """
         old_origin_x, old_origin_y = sp.bounds[:2]
         new_origin_x, new_origin_y = self.bounds[:2]
 
@@ -189,10 +230,10 @@ class Space(Polygon):
 
         if first_axis is 'x':
             rand_x = random.choice([x_min, x_max])
-            rand_y = random.randint(y_min, y_max)
+            rand_y = random.randint(ceil(y_min), floor(y_max))
         else:
             rand_y = random.choice([y_min, y_max])
-            rand_x = random.randint(x_min, x_max)
+            rand_x = random.randint(ceil(x_min), floor(x_max))
 
         loc_points = [
             (x+rand_x, y+rand_y) for x, y in content.exterior.coords[:-1]
