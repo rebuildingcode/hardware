@@ -16,3 +16,4 @@ NOTE: These docs are WIP.
 ## References
 
 1. [Design Patterns: Elements of Reusable Object-Oriented Software (1994)](https://learning.oreilly.com/library/view/design-patterns-elements/0201633612/)
+2. [Refactoring Guru: Design Patterns](https://refactoring.guru/design-patterns)
