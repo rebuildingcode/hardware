@@ -1,7 +1,7 @@
 import logging
 
 from ..axial_member import AxialMember
-from ...load import PointLoad
+from ..load import PointLoad
 
 log = logging.getLogger()
 

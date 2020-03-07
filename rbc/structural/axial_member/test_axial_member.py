@@ -3,7 +3,7 @@ from unittest import mock
 
 from .axial_member import AxialMember
 from ...point import Point
-from ...load import Load
+from ..load import Load
 
 
 # =================
