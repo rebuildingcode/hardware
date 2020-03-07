@@ -75,6 +75,8 @@ class AxialMember(LineString, ABC):
             'location': location
         })
 
+        self.load_data = sorted(self.load_data, key=lambda x: x['location'])
+
     @property
     def fbd_data(self):
         """JSON data for creating the free-body-diagram for the column"""

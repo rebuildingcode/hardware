@@ -1,8 +1,9 @@
 import pytest
+from unittest import mock
 
 from .column import Column
 from ...point import Point
-from ...load import Load
+from ..load import Load
 
 
 # =================
@@ -55,3 +56,15 @@ def test_column_with_loads(one_z_points):
 
     assert c.internal_load_at(25) == -1
     assert c.internal_load_at(75) == -2
+
+
+def test_plot(one_z_column):
+    """plt.show() should be called"""
+    c = one_z_column
+
+    l1 = Load(-1)
+    c.apply_load(l1)
+
+    with mock.patch('matplotlib.pyplot.show') as mock_show:
+        c.plot(include_loads=True)
+        mock_show.assert_called()
