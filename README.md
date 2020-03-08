@@ -44,4 +44,5 @@ pip install git+https://github.com/rebuildingcode/rbc.git
 
 ## Usage
 
-See [notebooks](/notebooks/) for example usage.
+See the [notebooks](https://github.com/rebuildingcode/rbc_notebooks/notebooks) here for
+example usage.
