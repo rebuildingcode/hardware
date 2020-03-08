@@ -13,7 +13,7 @@ env/
 
 # Jupyter notebooks
 **/.ipynb_checkpoints
-notebooks/private
+**/notebooks
 
 # macOS
 .DS_Store
