@@ -1,12 +1,6 @@
 from setuptools import setup, find_packages
 
 
-def load_requirements(fname):
-    with open(fname, 'r') as f:
-        reqs = f.read().splitlines()
-    return reqs
-
-
 setup(
     name='rbc',
     version='0.1dev',
@@ -16,5 +10,8 @@ setup(
     url='https://github.com/rebuildingcode/rbc',
     license='BSD-3',
     packages=find_packages(),
-    install_requires=load_requirements("requirements.txt"),
+    install_requires=[
+        'matplotlib==3.1.1',
+        'Shapely==1.7.0',
+    ],
 )
