@@ -1,4 +1,4 @@
-from .door import Door
+from .door import Door, DoorInstalled
 
 
-__all__ = ['Door']
+__all__ = ['Door', 'DoorInstalled']
