@@ -33,6 +33,7 @@ class Space(Polygon):
     def __init__(self, points=None, name=None, contents=None, exist_sp=None):
         self.max_retries = 15
         self.name = name
+        self.points = points
 
         super().__init__(shell=[(pt.x, pt.y) for pt in points])
 
