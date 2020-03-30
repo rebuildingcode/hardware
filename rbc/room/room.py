@@ -2,6 +2,7 @@ import random
 
 from ..point import Point
 from ..space import Space
+from ..wall.door import Door, DoorInstalled
 from .utils import random_rectangle
 
 
@@ -26,15 +27,9 @@ class Room(Space):
     """
     def __init__(self, room_type=None, **kwargs):
         self.room_type = room_type
+        self.door = None
 
         super().__init__(**kwargs)
-
-    # TODO: Add a method to create doors
-    # prerequisite: Door class object
-    # def create_door(self, corner, offset=1):
-    #     """
-    #     """
-    #     pass
 
     @classmethod
     def random(cls, room_type="random", bounds=None, min_area=MIN_AREA,
@@ -66,3 +61,25 @@ class Room(Space):
             pts = pts_in_bounds
 
         return cls(points=pts, room_type=room_type)
+
+    def add_door(self, door=None, corner=None, offset=0.5):
+        """Add a door to the room"""
+        if not corner:
+            # choose bottom-left corner
+            corner = self.points[0]
+            hinge_coords = (corner.x + offset, corner.y)
+            hinge_point = Point(*hinge_coords)
+            wall_direction = 'X'
+
+            # TODO: implement random door location
+            # choose a random corner
+            # rand_idx = random.randint(0, 3)
+            # corner = self.points[rand_idx]
+            # rand_direction =
+            # hinge_point =
+
+        if not door:
+            door = Door()  # get default Door
+
+        self.door = DoorInstalled(hinge_point=hinge_point, wall_direction=wall_direction,
+                                  door=door)
