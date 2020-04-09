@@ -5,10 +5,6 @@ from ...point import Point
 
 class SnapToWallMixin:
     """Mixin for objects attached to Wall"""
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.wall_start_point = kwargs.get('wall_start_point')
-        self.wall_direction = kwargs.get('wall_direction')
 
     @property
     def start_coord(self):

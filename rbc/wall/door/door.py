@@ -46,30 +46,17 @@ class DoorInstalled(SnapToWallMixin, Door):
 
     """
     def __init__(self, hinge_point, wall_direction, door=None, **kwargs):
-        self.hinge_point = hinge_point
-        self.wall_start_point = hinge_point  # mixin assignment
+        self.hinge_point = self.wall_start_point = hinge_point
         self.wall_direction = wall_direction
 
         if door:  # create instance with existing door params
-            door_vars = vars(door)
-            door_params = {
-                # Opening params
-                'width': door_vars.get('width'),
-                'height': door_vars.get('height'),
-                # Door params
-                'thickness': door_vars.get('thickness'),
-                'jamb_width': door_vars.get('jamb_width'),
-                'unit_price': door_vars.get('unit_price'),
-            }
+            door_params = vars(door)
+            for k, v in kwargs.items():
+                door_params[k] = v
         else:
             door_params = kwargs
 
-        stw_params = {  # mixin params
-            'wall_start_point': self.wall_start_point,
-            'wall_direction': self.wall_direction
-        }
-
-        super().__init__(**door_params, **stw_params)
+        super().__init__(**door_params)
 
     @property
     def latch_point(self):
