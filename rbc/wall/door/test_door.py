@@ -36,3 +36,10 @@ def test_install_existing_door():
 
     assert installed_door.width == 40
     assert installed_door.height == 84
+
+    # use existing door but with a different width
+    installed_diff_door = DoorInstalled(hinge_point=p, wall_direction='X',
+                                        door=existing_door, width=36)
+
+    assert installed_door.height == 84
+    assert installed_diff_door.width == 36
