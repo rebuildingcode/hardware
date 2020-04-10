@@ -1,7 +1,7 @@
 import pytest
 
-from ...point import Point
-from .horizontal_member import HorizontalMember
+from rbc.point import Point
+from ..horizontal_member import HorizontalMember
 
 
 # =================

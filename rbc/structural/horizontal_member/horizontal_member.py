@@ -6,6 +6,16 @@ INIT_ERROR_MSG = ('HorizontalMembers can only be instantiated with either a '
 
 
 class HorizontalMember:
+    """Base class for joists, beams, and girders
+
+    Parameters
+    ----------
+    length : float
+        Length of member
+    points : list of Points
+        Points that define the start and end of the member
+
+    """
     def __init__(self, length=None, points=None):
         if length and points:
             raise Exception(INIT_ERROR_MSG)
