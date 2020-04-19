@@ -9,10 +9,15 @@ class UniformlyLoadedMixin:
         M = w * l^2 / 8
 
         """
-        w = self.uniform_load
+        w = abs(self.uniform_load)
         l = self.length
 
-        return w * l ** 2 / 8
+        if 'pinned' in self.conn and 'roller' in self.conn:
+            return w * l ** 2 / 8
+        else:
+            raise Exception('max_moment method only supports simple beams. '
+                            'Connections must be combination for pinned and '
+                            'roller.')
 
     @property
     def max_shear(self):
@@ -24,7 +29,12 @@ class UniformlyLoadedMixin:
         V = w * l / 2
 
         """
-        w = self.uniform_load
+        w = abs(self.uniform_load)
         l = self.length
 
-        return w * l / 2
+        if 'pinned' in self.conn and 'roller' in self.conn:
+            return w * l / 2
+        else:
+            raise Exception('max_shear method only supports simple beams. '
+                            'Connections must be combination for pinned and '
+                            'roller.')

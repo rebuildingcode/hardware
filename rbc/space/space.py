@@ -232,7 +232,7 @@ class Space(Polygon):
         if first_axis is 'x':
             rand_x = random.choice([x_min, x_max])
             rand_y = random.randint(ceil(y_min), floor(y_max))
-        else:
+        else:  # pragma: no cover
             rand_y = random.choice([y_min, y_max])
             rand_x = random.randint(ceil(x_min), floor(x_max))
 
