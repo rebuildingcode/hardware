@@ -1,10 +1,9 @@
-import pytest
 from unittest import mock
+import pytest
 
-from .column import Column
 from ...point import Point
 from ..load import Load
-
+from .column import Column
 
 # =================
 # FIXTURES
@@ -37,16 +36,16 @@ def test_generic_column(one_z_column):
 def test_load_column(one_z_column):
     c = one_z_column
 
-    kg = Load(1)
+    kg = Load(magnitude=-1, direction='Z')
     c.apply_load(kg)
 
     assert c.load_data == [{'load': kg, 'location': 100}]
-    assert c.base_reaction == -1
+    assert c.base_reaction == 1
 
 
 def test_column_with_loads(one_z_points):
-    l1 = {'load': Load(-1), 'location': 50}
-    l2 = {'load': Load(2), 'location': 100}
+    l1 = {'load': Load(magnitude=-1, direction='Z'),  'location': 50}
+    l2 = {'load': Load(magnitude=2, direction='Z'),  'location': 100}
 
     c = Column(points=one_z_points, loads=[l1, l2])
 
@@ -62,7 +61,7 @@ def test_plot(one_z_column):
     """plt.show() should be called"""
     c = one_z_column
 
-    l1 = Load(-1)
+    l1 = Load(magnitude=-1, direction='Z')
     c.apply_load(l1)
 
     with mock.patch('matplotlib.pyplot.show') as mock_show:

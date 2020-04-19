@@ -48,8 +48,8 @@ def test_axial_member_with_points_without_z():
 
 
 def test_axial_member_with_loads(one_z_points):
-    _l1 = Load(-1)
-    _l2 = Load(2)
+    _l1 = Load(magnitude=-1, direction='Z')
+    _l2 = Load(magnitude=2, direction='Z')
     l1 = {'load': _l1, 'location': 100}
     l2 = {'load': _l2, 'location': 100}
 

@@ -3,6 +3,7 @@ import pytest
 from .section import Section
 from ...point import Point
 
+
 # =================
 # FIXTURES
 # =================
@@ -52,6 +53,7 @@ def test_section_with_invalid_params():
     # radius needs to be a float or int
     with pytest.raises(Exception):
         Section(radius='r')
+
 
 def test_circle_section():
     s = Section(radius=2)
